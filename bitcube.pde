@@ -25,6 +25,7 @@ color[][] grid = new color[w][h];
 String artnetIP = "10.0.7.62";
 
 void setup() {
+  frameRate(16);
   size(640, 160, P3D);
   noStroke();
   setupGrid();
@@ -50,17 +51,11 @@ void draw() {
     default: 
       break;
   }
-  
+
+  // Commented because it breaks on mac.
   //drawSpout(),
   
-  //Uncomment desired effect
-  //drawLightningBolt();
-  //drawRaindrops();
-  //drawReactive();
-  //drawSpout();
-  
   drawGrid();
-  //updateDMX();
   updateDMXserpentine();
 }
 

@@ -37,10 +37,6 @@ color pickColor() {
 color bkg = pickColor();
 color fore = pickColor();
 
-//void settings() {
-//  size(PIXEL_WIDTH, PIXEL_HEIGHT);
-//}
-
 void switchScheme() {
   color_scheme_index = (color_scheme_index+ 1) % schemes.length;
 }
@@ -71,7 +67,7 @@ void keyPressed() {
   } else if (key == 'g' || key == 'G') {
     screenClear(true);
   }
-  
+
   if (key == ']') {
     mode = (mode + 1) % NUM_MODES;
   }
@@ -81,7 +77,7 @@ void keyPressed() {
 }
 
 void screenClear(boolean random) {
-  for (int i = 0; i < CELL_HEIGHT; i++) {
+  for (int i = 0; i < CELL_WIDTH; i++) {
     for (int j = 0; j < CELL_HEIGHT; j++) {
       if (random) {
         grid[i][j] = pickColor();
@@ -103,8 +99,7 @@ void setupReactive() {
   boolean recording = true;
 
   if (recording) {
-    //file = new SoundFile(this, "vibraphon.aiff");
-    file = new SoundFile(this, "always_do.wav");
+    file = new SoundFile(this, "owl.wav");
     //file.rate(1.09);
     file.play();
     fft.input(file);
@@ -125,7 +120,7 @@ void renderVisualizerSuite(float[] spectrum) {
   bkg = pickColor();
 
   for (int i = 0; i < CELL_WIDTH; i++) {
-    int freq_index = i * (BANDS / (CELL_HEIGHT * 8));
+    int freq_index = (i % (CELL_WIDTH / SIDES)) * (BANDS / (CELL_HEIGHT * 8));
 
     // Decide how many boxes we'll color in for this.
     int boxes = int(min(spectrum[freq_index] * energy, CELL_HEIGHT));
@@ -160,15 +155,4 @@ void drawReactive() {
 
   fft.analyze(spectrum);
   renderVisualizerSuite(spectrum);
-
-  //for (int side = 0; side < SIDES; side++) {
-  //  int side_offset = (side * CELL_HEIGHT * PIXEL_SIZE);
-
-  //  for (int i = 0; i < CELL_WIDTH; i++) {
-  //    for (int j = 0; j < CELL_HEIGHT; j++) {
-  //      fill(grid[i][j]);
-  //      square(side_offset + (i * PIXEL_SIZE), j * PIXEL_SIZE, PIXEL_SIZE);
-  //    }
-  //  }
-  //}
 }
