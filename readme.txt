@@ -1,4 +1,4 @@
-Copy the whole bitcube folder and open main.pde with processing.
+Copy the whole bitcube folder and open bitcube.pde with processing.
 
 //Bitcube is a 32x8 display.
 //This is a processing sketch that consists of multiple files.
