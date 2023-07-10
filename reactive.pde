@@ -71,6 +71,13 @@ void keyPressed() {
   } else if (key == 'g' || key == 'G') {
     screenClear(true);
   }
+  
+  if (key == ']') {
+    mode = (mode + 1) % NUM_MODES;
+  }
+  if (key == '[') {
+    mode = mode == 0 ? NUM_MODES - 1 : mode - 1;
+  }
 }
 
 void screenClear(boolean random) {
@@ -154,14 +161,14 @@ void drawReactive() {
   fft.analyze(spectrum);
   renderVisualizerSuite(spectrum);
 
-  for (int side = 0; side < SIDES; side++) {
-    int side_offset = (side * CELL_HEIGHT * PIXEL_SIZE);
+  //for (int side = 0; side < SIDES; side++) {
+  //  int side_offset = (side * CELL_HEIGHT * PIXEL_SIZE);
 
-    for (int i = 0; i < CELL_WIDTH; i++) {
-      for (int j = 0; j < CELL_HEIGHT; j++) {
-        fill(grid[i][j]);
-        square(side_offset + (i * PIXEL_SIZE), j * PIXEL_SIZE, PIXEL_SIZE);
-      }
-    }
-  }
+  //  for (int i = 0; i < CELL_WIDTH; i++) {
+  //    for (int j = 0; j < CELL_HEIGHT; j++) {
+  //      fill(grid[i][j]);
+  //      square(side_offset + (i * PIXEL_SIZE), j * PIXEL_SIZE, PIXEL_SIZE);
+  //    }
+  //  }
+  //}
 }

@@ -14,6 +14,9 @@ final int w = 32;
 final int h = 8;
 final int pixel_size = 20;
 
+final int NUM_MODES = 3;
+int mode = 0;
+
 color[][] grid = new color[w][h];
 
 //String artnetIP = "bitcube.local"; //saw issues with lag evey 30 seconds. when it looks up the mdns name?
@@ -33,11 +36,29 @@ void setup() {
 
 void draw() {
   background(0);
+  
+  switch(mode) {
+    case 0:
+      drawLightningBolt();
+      break;
+    case 1:
+      drawRaindrops();
+      break;
+    case 2:
+      drawReactive();
+      break;
+    default: 
+      break;
+  }
+  
+  //drawSpout(),
+  
   //Uncomment desired effect
   //drawLightningBolt();
   //drawRaindrops();
-  drawReactive();
+  //drawReactive();
   //drawSpout();
+  
   drawGrid();
   //updateDMX();
   updateDMXserpentine();
