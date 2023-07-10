@@ -64,4 +64,5 @@ void updateDMXserpentine() {
   // Send DMX data to two different universes
   artnet.unicastDmx(artnetIP, 0, 0, dmxData[0]);
   artnet.unicastDmx(artnetIP, 0, 1, dmxData[1]); // universe 1
+  artnet.unicastDmx(artnetIP, 0, 999, dmxData[1]); // universe 1
 }

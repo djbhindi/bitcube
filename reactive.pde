@@ -98,7 +98,7 @@ void setupReactive() {
   if (recording) {
     //file = new SoundFile(this, "vibraphon.aiff");
     file = new SoundFile(this, "always_do.wav");
-    file.rate(1.09);
+    //file.rate(1.09);
     file.play();
     fft.input(file);
     beat_detect.input(file);

@@ -35,11 +35,11 @@ void draw() {
   background(0);
   //Uncomment desired effect
   //drawLightningBolt();
-  drawRaindrops();
-  //drawReactive();
+  //drawRaindrops();
+  drawReactive();
   //drawSpout();
   drawGrid();
-  updateDMX();
+  //updateDMX();
   updateDMXserpentine();
 }
 
