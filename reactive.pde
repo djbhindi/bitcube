@@ -20,8 +20,8 @@ final color[] orange_blue_scheme = {#8ECAE6, #219EBC, #FFB703, #FB8500, #023047}
 final color[] marine_layer_scheme = {#0081A7, #00AFB9, #FDFCDC, #FED9B7, #F07167};
 final color[] summer_scheme = {#F72585, #B5179E, #FDFCDC, #7209B7, #480CA8, #3A0CA3, #3F37C9, #4361EE, #4895EF, #4CC9F0};
 final color[][] schemes = {
-  orange_blue_scheme,
   summer_scheme,
+  orange_blue_scheme,
   marine_layer_scheme
 };
 int color_scheme_index = 0;
@@ -99,7 +99,7 @@ void setupReactive() {
   boolean recording = true;
 
   if (recording) {
-    file = new SoundFile(this, "owl.wav");
+    file = new SoundFile(this, "oxygen.wav");
     //file.rate(1.09);
     file.play();
     fft.input(file);
