@@ -11,8 +11,9 @@ float[] spectrum = new float[BANDS];
 final int PIXEL_SIZE = 20;
 final int PIXEL_WIDTH = 32 * PIXEL_SIZE;
 final int PIXEL_HEIGHT = 8 * PIXEL_SIZE;
-final int CELL_HEIGHT = 8;
 final int SIDES = 4;
+final int CELL_HEIGHT = 8;
+final int CELL_WIDTH = CELL_HEIGHT * SIDES;
 
 // Colors
 final color[] orange_blue_scheme = {#8ECAE6, #219EBC, #FFB703, #FB8500, #023047};
@@ -35,10 +36,6 @@ color pickColor() {
 
 color bkg = pickColor();
 color fore = pickColor();
-
-
-// Global so that it doesn't reset between calls to renderVisualizerSuite().
-color[][] grid = new color[CELL_HEIGHT * 4][CELL_HEIGHT];
 
 //void settings() {
 //  size(PIXEL_WIDTH, PIXEL_HEIGHT);
@@ -96,11 +93,11 @@ void setupReactive() {
 
   // Load a soundfile from the /data folder of the sketch and play it back
   //boolean recording = true;
-  boolean recording = false;
+  boolean recording = true;
 
   if (recording) {
-    file = new SoundFile(this, "vibraphon.aiff");
-    //file = new SoundFile(this, "../data/owl.mp3");
+    //file = new SoundFile(this, "vibraphon.aiff");
+    file = new SoundFile(this, "always_do.wav");
     file.rate(1.09);
     file.play();
     fft.input(file);
@@ -114,13 +111,13 @@ void setupReactive() {
     beat_detect.input(in);
   }
 
-  grid = new color[CELL_HEIGHT * 4][CELL_HEIGHT];
+  grid = new color[CELL_WIDTH][CELL_HEIGHT];
 }
 
 void renderVisualizerSuite(float[] spectrum) {
   bkg = pickColor();
 
-  for (int i = 0; i < CELL_HEIGHT; i++) {
+  for (int i = 0; i < CELL_WIDTH; i++) {
     int freq_index = i * (BANDS / (CELL_HEIGHT * 8));
 
     // Decide how many boxes we'll color in for this.
@@ -160,7 +157,7 @@ void drawReactive() {
   for (int side = 0; side < SIDES; side++) {
     int side_offset = (side * CELL_HEIGHT * PIXEL_SIZE);
 
-    for (int i = 0; i < CELL_HEIGHT * 4; i++) {
+    for (int i = 0; i < CELL_WIDTH; i++) {
       for (int j = 0; j < CELL_HEIGHT; j++) {
         fill(grid[i][j]);
         square(side_offset + (i * PIXEL_SIZE), j * PIXEL_SIZE, PIXEL_SIZE);

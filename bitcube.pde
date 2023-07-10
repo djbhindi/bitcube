@@ -12,8 +12,9 @@
 
 final int w = 32;
 final int h = 8;
+final int pixel_size = 20;
 
-//color[][] grid = new color[w][h];
+color[][] grid = new color[w][h];
 
 //String artnetIP = "bitcube.local"; //saw issues with lag evey 30 seconds. when it looks up the mdns name?
 //String artnetIP = "127.0.0.1"; //test locally
@@ -25,7 +26,7 @@ void setup() {
   setupGrid();
   setupReactive();
   setupArtNet();
-  setupSpout();
+  //setupSpout();
 }
 
 
@@ -58,7 +59,7 @@ void drawGrid() {
   for (int i = 0; i < w; i++) {
     for (int j = 0; j < h; j++) {
       fill(grid[i][j]);
-      rect(i * 20, j * 20, 20, 20);
+      square(i * pixel_size, j * pixel_size, pixel_size);
     }
   }
 }
