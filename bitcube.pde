@@ -18,7 +18,8 @@ color[][] grid = new color[w][h];
 
 //String artnetIP = "bitcube.local"; //saw issues with lag evey 30 seconds. when it looks up the mdns name?
 //String artnetIP = "127.0.0.1"; //test locally
-String artnetIP = "192.168.1.144";
+//String artnetIP = "192.168.1.144";
+String artnetIP = "10.0.7.62";
 
 void setup() {
   size(640, 160, P3D);
@@ -34,11 +35,12 @@ void draw() {
   background(0);
   //Uncomment desired effect
   //drawLightningBolt();
-  //drawRaindrops();
-  drawReactive();
+  drawRaindrops();
+  //drawReactive();
   //drawSpout();
-  //drawGrid();
+  drawGrid();
   updateDMX();
+  updateDMXserpentine();
 }
 
 
