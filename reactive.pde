@@ -96,7 +96,7 @@ void setupReactive() {
 
   // Load a soundfile from the /data folder of the sketch and play it back
   //boolean recording = true;
-  boolean recording = true;
+  boolean recording = false;
 
   if (recording) {
     file = new SoundFile(this, "oxygen.wav");

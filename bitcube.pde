@@ -12,29 +12,33 @@
 
 final int w = 32;
 final int h = 8;
-final int pixel_size = 20;
+final int pixel_size = 40;
 
 final int NUM_MODES = 3;
-int mode = 0;
+int mode = 3;
 
 color[][] grid = new color[w][h];
 
-//String artnetIP = "bitcube.local"; //saw issues with lag evey 30 seconds. when it looks up the mdns name?
+String artnetIP = "bitcube2.local"; //saw issues with lag evey 30 seconds. when it looks up the mdns name?
 //String artnetIP = "127.0.0.1"; //test locally
 //String artnetIP = "192.168.1.144";
-String artnetIP = "10.0.7.62";
+//String artnetIP = "10.0.7.62";
 
+// Modify setup() to include setupMatrixRain()
 void setup() {
-  frameRate(16);
-  size(640, 160, P3D);
+  //frameRate(16);
+  size(1280, 320, P3D);
   noStroke();
   setupGrid();
-  setupReactive();
+  //setupReactive();
   setupArtNet();
   //setupSpout();
+  setupLaserAttackBlue();
+  setupSauron();
+
 }
 
-
+// Modify draw() to include drawMatrixRain()
 void draw() {
   background(0);
   
@@ -48,15 +52,28 @@ void draw() {
     case 2:
       drawReactive();
       break;
+    case 3:
+      drawGrowingMoss();
+      break;
+    case 4:
+      drawLaserAttackBlue();
+      break;
+    case 5:
+      drawLaserStrike();
+      break;
+    case 6:
+      drawRainfall();
+      break;
+    case 7:
+      drawSauron1();
+      break;
     default: 
       break;
   }
-
-  // Commented because it breaks on mac.
-  //drawSpout(),
   
   drawGrid();
-  updateDMXserpentine();
+  updateDMX();
+  //updateDMXserpentine();
 }
 
 
