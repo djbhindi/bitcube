@@ -15,7 +15,7 @@ final int h = 8;
 final int pixel_size = 40;
 
 final int NUM_MODES = 3;
-int mode = 3;
+int mode = 8;
 
 color[][] grid = new color[w][h];
 
@@ -35,6 +35,8 @@ void setup() {
   //setupSpout();
   setupLaserAttackBlue();
   setupSauron();
+  setupRainbow();
+  setupTetris();
 
 }
 
@@ -66,6 +68,15 @@ void draw() {
       break;
     case 7:
       drawSauron1();
+      break;
+    case 8:
+      drawBlueDrip();
+      break;
+    case 9:
+      drawRainbow();
+      break;
+    case 10:
+      drawTetris();
       break;
     default: 
       break;
