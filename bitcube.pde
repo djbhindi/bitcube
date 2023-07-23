@@ -103,7 +103,6 @@ void drawGrid() {
 // The main sketch handles switches between drawings with [ and ].
 // Apart from those keys, any key pressed will be passed through to the sketch.
 // TODO: Create an indexSearch class that handles the wraparound-to-0 logic and re-use it (e.g. in reactive).
-// TODO: When mode is updated, call a (to-be-created) onSwitch function for the drawing to set e.g. frameRate.
 void keyPressed() {
   if (key == ']') {
     mode = (mode + 1) % modes.size();
