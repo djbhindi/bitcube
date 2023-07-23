@@ -15,7 +15,7 @@ final int h = 8;
 final int pixel_size = 40;
 
 final int NUM_MODES = 3;
-int mode = 8;
+int mode = 0;
 
 color[][] grid = new color[w][h];
 
@@ -23,6 +23,9 @@ String artnetIP = "bitcube2.local"; //saw issues with lag evey 30 seconds. when 
 //String artnetIP = "127.0.0.1"; //test locally
 //String artnetIP = "192.168.1.144";
 //String artnetIP = "10.0.7.62";
+
+
+LightningBoltDrawing lbd = new LightningBoltDrawing();
 
 // Modify setup() to include setupMatrixRain()
 void setup() {
@@ -40,13 +43,15 @@ void setup() {
 
 }
 
+
 // Modify draw() to include drawMatrixRain()
 void draw() {
   background(0);
   
   switch(mode) {
     case 0:
-      drawLightningBolt();
+      lbd.renderDrawing(grid);
+      //drawLightningBolt();
       break;
     case 1:
       drawRaindrops();
