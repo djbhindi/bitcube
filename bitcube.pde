@@ -13,17 +13,16 @@
 final int w = 32;
 final int h = 8;
 final int pixel_size = 40;
-
-int mode = 0;
-
 color[][] grid = new color[w][h];
+
+// Controls which drawing we render.
+int mode = 0;
+ArrayList<BitDrawing> modes = new ArrayList<BitDrawing>();
 
 String artnetIP = "bitcube2.local"; //saw issues with lag evey 30 seconds. when it looks up the mdns name?
 //String artnetIP = "127.0.0.1"; //test locally
 //String artnetIP = "192.168.1.144";
 //String artnetIP = "10.0.7.62";
-
-ArrayList<BitDrawing> modes = new ArrayList<BitDrawing>();
 
 void settings() {
   size(w * pixel_size, h * pixel_size, P3D);
@@ -31,7 +30,7 @@ void settings() {
 
 // Modify setup() to include setupMatrixRain()
 void setup() {
-  frameRate(30);
+  //frameRate(30);
   noStroke();
   setupGrid();
   setupArtNet();
@@ -45,13 +44,15 @@ void setup() {
   modes.add(new LaserAttackDrawing(200, 5));
   modes.add(new LaserAttackDrawing(120, 10));
   modes.add(new SauronDrawing());
-  modes.add(new ReactiveDrawing(this));
+  //modes.add(new ReactiveDrawing(this));
   modes.add(new RainbowDrawing());
   //modes.add(new RainfallDrawing());
   
+  // This runs a one-time setup for each sketch.
   for (BitDrawing drawing : modes) {
     drawing.setupDrawing();
   }
+  modes.get(mode).onSwitch();
 }
 
 // Modify draw() to include drawMatrixRain()
@@ -59,14 +60,6 @@ void draw() {
   background(0);
   
   modes.get(mode).renderDrawing(grid);
-
-  switch(mode) {
-  case 10:
-    drawTetris();
-    break;
-  default:
-    break;
-  }
 
   drawGrid();
   //updateDMX();
@@ -77,6 +70,10 @@ public abstract class BitDrawing {
   abstract public void renderDrawing(color[][] grid);
 
   public void setupDrawing() {};
+  
+  public void onSwitch() {
+    frameRate(30);
+  }
   
   public void keyHandle(char key) {}
 }
@@ -105,6 +102,8 @@ void drawGrid() {
 
 // The main sketch handles switches between drawings with [ and ].
 // Apart from those keys, any key pressed will be passed through to the sketch.
+// TODO: Create an indexSearch class that handles the wraparound-to-0 logic and re-use it (e.g. in reactive).
+// TODO: When mode is updated, call a (to-be-created) onSwitch function for the drawing to set e.g. frameRate.
 void keyPressed() {
   if (key == ']') {
     mode = (mode + 1) % modes.size();
@@ -112,5 +111,8 @@ void keyPressed() {
     mode = mode == 0 ? modes.size() - 1 : mode - 1;
   } else {
     modes.get(mode).keyHandle(key);
+    return;
   }
+  
+  modes.get(mode).onSwitch();
 }

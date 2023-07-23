@@ -29,10 +29,14 @@ int[][] blockCols = new int[4][2];
 color[][] blockColors = new color[4][2];
 final int cellSize = 20;
 
+void onSwitch() {
+  frameRate(2);  
+}
+
 void setupTetris() {
   colorMode(HSB, 360, 100, 100);
   stroke(255);
-  frameRate(2);
+  
 
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 2; j++) {

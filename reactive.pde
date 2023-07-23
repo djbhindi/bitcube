@@ -23,6 +23,10 @@ public class ReactiveDrawing extends BitDrawing {
     beat_detect = new BeatDetector(p);
   }
 
+  public void onSwitch() {
+    frameRate(16);
+  }
+
   // Colors
   final color[] orange_blue_scheme = {#8ECAE6, #219EBC, #FFB703, #FB8500, #023047};
   final color[] marine_layer_scheme = {#0081A7, #00AFB9, #FDFCDC, #FED9B7, #F07167};
@@ -45,11 +49,11 @@ public class ReactiveDrawing extends BitDrawing {
   color bkg = pickColor();
   color fore = pickColor();
 
-  void switchScheme() {
+  private void switchScheme() {
     color_scheme_index = (color_scheme_index+ 1) % schemes.length;
   }
 
-  void keyHandle(char key) {
+  public void keyHandle(char key) {
     if ( key >= '0' && key <= '9' ) {
       str_num += key;
     }
@@ -79,7 +83,7 @@ public class ReactiveDrawing extends BitDrawing {
   int bpm = -1;
   String str_num = "";
 
-  void screenClear(boolean random) {
+  private void screenClear(boolean random) {
     for (int i = 0; i < CELL_WIDTH; i++) {
       for (int j = 0; j < CELL_HEIGHT; j++) {
         if (random) {
@@ -91,10 +95,7 @@ public class ReactiveDrawing extends BitDrawing {
     }
   }
 
-  void setupDrawing() {
-    // TODO: Refactor this to the per-scheme initialization.
-    frameRate(16);
-
+  public void setupDrawing() {
     // Load a soundfile from the /data folder of the sketch and play it back
     boolean recording = true;
 
@@ -110,7 +111,7 @@ public class ReactiveDrawing extends BitDrawing {
     }
   }
 
-  void renderVisualizerSuite(float[] spectrum, color[][] grid) {
+  private void renderVisualizerSuite(float[] spectrum, color[][] grid) {
     bkg = pickColor();
 
     for (int i = 0; i < CELL_WIDTH; i++) {
@@ -129,7 +130,7 @@ public class ReactiveDrawing extends BitDrawing {
 
       // Color in background on beats for a neater effect.
       if (beat_detect.isBeat()) {
-        println("BEAT", frameCount);
+        //println("BEAT", frameCount);
         for (int j2 = boxes; j2 < CELL_HEIGHT; j2 ++) {
           grid[i][j2] = bkg;
         }
@@ -145,7 +146,6 @@ public class ReactiveDrawing extends BitDrawing {
         return;
       }
     }
-
 
     fft.analyze(spectrum);
     renderVisualizerSuite(spectrum, grid);
