@@ -87,6 +87,15 @@ void draw() {
   //updateDMXserpentine();
 }
 
+public abstract class BitDrawing {
+   abstract public void renderDrawing(color[][] grid);
+   
+   public void setupDrawing() {
+     // Default; can be overriden by subclasses.
+     frameRate(30);  
+   }
+   
+}
 
 void stop() {
   stopArtNet();
