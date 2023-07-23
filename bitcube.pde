@@ -3,7 +3,7 @@
 //Bitcube is the main file and is for the overall flow of the program
 //It also sets up a grid for the color data and renders it to the screen.
 //Artnet sends the data over the network to the leds.
-//Spout allows processing to receive a texture and fills the color array grid. 
+//Spout allows processing to receive a texture and fills the color array grid.
 //The other files are individual effects that write to the grid in the draw loop.
 //You will need to install dependancy libraries incuding spout and artnet.
 
@@ -14,7 +14,6 @@ final int w = 32;
 final int h = 8;
 final int pixel_size = 40;
 
-final int NUM_MODES = 3;
 int mode = 0;
 
 color[][] grid = new color[w][h];
@@ -24,82 +23,62 @@ String artnetIP = "bitcube2.local"; //saw issues with lag evey 30 seconds. when 
 //String artnetIP = "192.168.1.144";
 //String artnetIP = "10.0.7.62";
 
+ArrayList<BitDrawing> modes = new ArrayList<BitDrawing>();
 
-LightningBoltDrawing lbd = new LightningBoltDrawing();
+void settings() {
+  size(w * pixel_size, h * pixel_size, P3D);
+}
 
 // Modify setup() to include setupMatrixRain()
 void setup() {
-  //frameRate(16);
-  size(1280, 320, P3D);
+  frameRate(30);
   noStroke();
   setupGrid();
-  //setupReactive();
   setupArtNet();
   //setupSpout();
-  setupLaserAttackBlue();
-  setupSauron();
-  setupRainbow();
-  setupTetris();
+  //setupTetris();
 
+  modes.add(new LightningBoltDrawing());
+  modes.add(new RaindropsDrawing());
+  modes.add(new GrowingMossDrawing());
+  modes.add(new BlueDripDrawing());
+  modes.add(new LaserAttackDrawing(200, 5));
+  modes.add(new LaserAttackDrawing(120, 10));
+  modes.add(new SauronDrawing());
+  modes.add(new ReactiveDrawing(this));
+  modes.add(new RainbowDrawing());
+  //modes.add(new RainfallDrawing());
+  
+  for (BitDrawing drawing : modes) {
+    drawing.setupDrawing();
+  }
 }
-
 
 // Modify draw() to include drawMatrixRain()
 void draw() {
   background(0);
   
+  modes.get(mode).renderDrawing(grid);
+
   switch(mode) {
-    case 0:
-      lbd.renderDrawing(grid);
-      //drawLightningBolt();
-      break;
-    case 1:
-      drawRaindrops();
-      break;
-    case 2:
-      drawReactive();
-      break;
-    case 3:
-      drawGrowingMoss();
-      break;
-    case 4:
-      drawLaserAttackBlue();
-      break;
-    case 5:
-      drawLaserStrike();
-      break;
-    case 6:
-      drawRainfall();
-      break;
-    case 7:
-      drawSauron1();
-      break;
-    case 8:
-      drawBlueDrip();
-      break;
-    case 9:
-      drawRainbow();
-      break;
-    case 10:
-      drawTetris();
-      break;
-    default: 
-      break;
+  case 10:
+    drawTetris();
+    break;
+  default:
+    break;
   }
-  
+
   drawGrid();
-  updateDMX();
+  //updateDMX();
   //updateDMXserpentine();
 }
 
 public abstract class BitDrawing {
-   abstract public void renderDrawing(color[][] grid);
-   
-   public void setupDrawing() {
-     // Default; can be overriden by subclasses.
-     frameRate(30);  
-   }
-   
+  abstract public void renderDrawing(color[][] grid);
+
+  public void setupDrawing() {};
+  
+  public void keyHandle(char key) {}
 }
 
 void stop() {
@@ -121,5 +100,17 @@ void drawGrid() {
       fill(grid[i][j]);
       square(i * pixel_size, j * pixel_size, pixel_size);
     }
+  }
+}
+
+// The main sketch handles switches between drawings with [ and ].
+// Apart from those keys, any key pressed will be passed through to the sketch.
+void keyPressed() {
+  if (key == ']') {
+    mode = (mode + 1) % modes.size();
+  } else if (key == '[') {
+    mode = mode == 0 ? modes.size() - 1 : mode - 1;
+  } else {
+    modes.get(mode).keyHandle(key);
   }
 }

@@ -3,7 +3,7 @@
 int[][][] blocks = {
   {
     {1, 1, 1, 1}
-  }, 
+  },
   {
     {1, 1},
     {1, 1}
@@ -27,12 +27,13 @@ int[][][][] currentBlocks = new int[4][2][][];
 int[][] blockRows = new int[4][2];
 int[][] blockCols = new int[4][2];
 color[][] blockColors = new color[4][2];
+final int cellSize = 20;
 
 void setupTetris() {
   colorMode(HSB, 360, 100, 100);
   stroke(255);
   frameRate(2);
-  
+
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 2; j++) {
       spawnBlock(i, j);
@@ -43,7 +44,7 @@ void setupTetris() {
 
 void drawTetris() {
   background(0);
-  
+
   for (int b = 0; b < 4; b++) {
     for (int s = 0; s < 2; s++) {
       fill(blockColors[b][s]);
@@ -55,26 +56,26 @@ void drawTetris() {
           }
         }
       }
-      
+
       // Move the block down
       blockRows[b][s]++;
-      
+
       // If the block has reached the bottom, spawn a new one
-      if (blockRows[b][s] + currentBlocks[b][s].length > rows) {
+      if (blockRows[b][s] + currentBlocks[b][s].length > h) {
         spawnBlock(b, s);
         blockRows[b][s] = -s * 4;  // Reset staggered position and increase space
       }
-    
+
       for (int i = 0; i < currentBlocks[b][s].length; i++) {
         for (int j = 0; j < currentBlocks[b][s][i].length; j++) {
           if (currentBlocks[b][s][i][j] == 1) {
             int row = blockRows[b][s] + i;
             int col = blockCols[b][s] + j;
             grid[row][col] = blockColors[b][s];
+          }
+        }
       }
     }
-  }
-}
   }
 }
 

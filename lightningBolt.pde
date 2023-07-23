@@ -1,7 +1,6 @@
 //lightningBolt
 
-
-public class LightningBoltDrawing {
+public class LightningBoltDrawing extends BitDrawing {
   private int boltTimer = -1;
   private int boltDuration = 10; // Adjust as needed
   private ArrayList<PVector> boltPath = new ArrayList<PVector>();
@@ -45,7 +44,6 @@ public class LightningBoltDrawing {
   } 
   
   public void renderDrawing(color[][] grid) {
-     System.out.println("@@rohitmukherjee in lightning bolt");
      triggerBolt();
      animateBolt(grid);
    }
