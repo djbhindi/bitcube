@@ -35,6 +35,7 @@ void setup() {
   setupGrid();
   setupArtNet();
   //setupSpout();
+  setupSpoutSend();
   //setupTetris();
 
   modes.add(new LightningBoltDrawing());
@@ -62,6 +63,7 @@ void draw() {
   modes.get(mode).renderDrawing(grid);
 
   drawGrid();
+  sendSpoutData();
   //updateDMX();
   //updateDMXserpentine();
 }
